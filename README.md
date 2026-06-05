@@ -26,7 +26,6 @@ Serão trabalhados os seguintes conceitos:
 - Árvores
 - Busca em Profundidade (DFS)
 - Grafos
-- Menor Caminho
 - Análise de Complexidade
 
 Todas as soluções serão validadas por **testes automatizados com pytest**. Além da correção funcional, algumas questões também possuem restrições de complexidade assintótica.
@@ -38,10 +37,11 @@ Todas as soluções serão validadas por **testes automatizados com pytest**. Al
 Ao finalizar esta lista, você deverá ser capaz de:
 
 - Utilizar Hash Maps para resolver problemas de busca e agrupamento
+- Utilizar dicionários para reduzir a complexidade de algoritmos
 - Percorrer árvores utilizando estratégias recursivas
 - Resolver problemas clássicos envolvendo grafos
 - Aplicar algoritmos de busca em profundidade
-- Implementar algoritmos de menor caminho
+- Explorar propriedades de Árvores Binárias de Busca (BST)
 - Analisar a eficiência de soluções em termos de tempo e espaço
 
 -----
@@ -69,11 +69,10 @@ Ao finalizar esta lista, você deverá ser capaz de:
 
 ### Passo a passo da entrega
 
-1. Aceite a atividade no GitHub Classroom
-2. Clone o repositório criado automaticamente
-3. Desenvolva sua solução
-4. Faça commits regularmente
-5. Envie suas alterações para o GitHub
+1. Clone o repositório criado automaticamente
+2. Desenvolva sua solução
+3. Faça commits regularmente
+4. Envie suas alterações para o GitHub
 
 ### ⚠️ Importante
 
@@ -148,17 +147,16 @@ python3 -m pytest tests/test_group_anagrams.py
 
 ## 🗂️ Estrutura da Lista
 
-```
+```text
 .
 ├── img
 ├── README.md
 ├── dev-requirements.txt
 ├── challenges
-│   ├── challenge_group_anagrams.py
-│   ├── challenge_has_cycle.py
-│   ├── challenge_tree_height.py
-│   ├── challenge_lowest_common_ancestor.py
-│   └── challenge_shortest_path.py
+│   ├── group_anagrams.py
+│   ├── has_cycle.py
+│   ├── tree_height.py
+│   └── lowest_common_ancestor.py
 │
 ├── data_structures
 │   ├── node.py
@@ -167,10 +165,12 @@ python3 -m pytest tests/test_group_anagrams.py
 │
 └── tests
     ├── test_group_anagrams.py
+    ├── test_group_anagrams_complexity.py
     ├── test_has_cycle.py
+    ├── test_has_cycle_complexity.py
     ├── test_tree_height.py
-    ├── test_lowest_common_ancestor.py
-    └── test_shortest_path.py
+    ├── test_tree_height_complexity.py
+    └── test_lowest_common_ancestor.py
 ```
 
 -----
@@ -227,7 +227,7 @@ Alguns desafios possuem limites máximos de complexidade. Os testes automatizado
 
 ### 1 — Agrupando Anagramas
 
-> Implemente em `challenges/challenge_group_anagrams.py`
+> Implemente em `challenges/group_anagrams.py`
 
 Dada uma lista de palavras, agrupe todas as palavras que sejam anagramas entre si.
 
@@ -248,40 +248,94 @@ Saída:
 ]
 ```
 
+**Complexidade esperada**
+
+```text
+O(n · k log k)
+```
+
+onde:
+
+- n é a quantidade de palavras;
+- k é o tamanho médio das palavras.
+
 -----
 
 ### 2 — Detectando Ciclos em Grafos
 
-> Implemente em `challenges/challenge_has_cycle.py`
+> Implemente em `challenges/has_cycle.py`
 
 Determine se um grafo possui ciclos. Retorne `True` caso exista pelo menos um ciclo, ou `False` caso contrário.
+
+**Complexidade esperada**
+
+```text
+O(V + E)
+```
+
+onde:
+
+- V é o número de vértices;
+- E é o número de arestas.
 
 -----
 
 ### 3 — Altura de uma Árvore
 
-> Implemente em `challenges/challenge_tree_height.py`
+> Implemente em `challenges/tree_height.py`
 
-Utilizando as classes fornecidas, implemente uma função que retorne a altura de uma árvore.
+Utilizando as classes fornecidas, implemente uma função que retorne a altura de uma árvore binária.
+
+Considere a seguinte convenção:
+
+```text
+Árvore vazia -> altura -1
+Árvore contendo apenas a raiz -> altura 0
+```
+
+**Complexidade esperada**
+
+```text
+O(n)
+```
+
+onde:
+
+- n é o número de nós da árvore.
 
 -----
 
 ### 4 — Menor Ancestral Comum
 
-> Implemente em `challenges/challenge_lowest_common_ancestor.py`
+> Implemente em `challenges/lowest_common_ancestor.py`
 
-Dados dois nós pertencentes a uma árvore, determine o menor ancestral comum entre eles.
+Considere uma Árvore Binária de Busca (BST).
 
------
+Dados dois valores existentes na árvore, determine o valor correspondente ao menor ancestral comum entre eles.
 
-### 5 — Menor Caminho
+**Exemplo**
 
-> Implemente em `challenges/challenge_shortest_path.py`
+```text
+        20
+       /  \
+     10    30
+    / \    / \
+   5  15  25 35
+```
 
-Utilizando o algoritmo de Dijkstra, determine:
+```python
+lowest_common_ancestor(root, 5, 15)
+```
 
-- o menor custo entre dois vértices;
-- o caminho correspondente.
+Retorna:
+
+```python
+10
+```
+
+**Observação**
+
+Considere que os dois valores informados sempre existirão na árvore.
 
 -----
 

@@ -2,8 +2,8 @@ from time import sleep
 
 import big_o
 
-from challenges.has_cycle import (
-    has_cycle,
+from challenges.lowest_common_ancestor import (
+    lowest_common_ancestor,
 )
 
 from tests.complexities import (
@@ -14,11 +14,21 @@ from tests.complexities import (
 )
 
 from tests.generators import (
-    generate_graph_with_cycle,
+    generate_balanced_bst,
 )
 
 
-def test_evaluate_time_has_cycle():
+def lca_wrapper(data):
+    root, value1, value2 = data
+
+    return lowest_common_ancestor(
+        root,
+        value1,
+        value2,
+    )
+
+
+def test_evaluate_time_lca():
     highest_acceptable_complexity = (
         big_o.complexities.Linear
     )
@@ -26,8 +36,8 @@ def test_evaluate_time_has_cycle():
     for _ in range(3):
 
         data = ComplexityInferenceData(
-            analyzed_function=has_cycle,
-            generation_function=generate_graph_with_cycle,
+            analyzed_function=lca_wrapper,
+            generation_function=generate_balanced_bst,
             order_of_magnitude=5,
             initial_order=2,
             base_of_magnitude=3,
@@ -51,7 +61,6 @@ def test_evaluate_time_has_cycle():
         sleep(3)
 
     else:
-
         assert False, (
             "Seu algoritmo parece ser "
             f"{NOTATIONS[observed_complexity.__class__]}"

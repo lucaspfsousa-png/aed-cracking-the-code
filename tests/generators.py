@@ -23,10 +23,6 @@ def generate_schedules(
 
 
 def generate_anagrams(size: int) -> Tuple[str, str]:
-    """
-    Gera duas strings que são anagramas.
-    """
-
     first_string = big_o.datagen.strings(size)
 
     chars = list(first_string)
@@ -51,22 +47,6 @@ def generate_group_anagrams(quantity: int):
         words.append(second)
 
     return words
-
-
-def generate_palindromes(size: int) -> str:
-    """
-    Gera um palíndromo.
-    """
-
-    string = big_o.datagen.strings(size)
-
-    mid = size // 2
-
-    return (
-        string[:mid]
-        + string[mid:size-mid]
-        + string[mid-1::-1]
-    )
 
 
 @lru_cache
@@ -127,36 +107,6 @@ def generate_graph_with_cycle(quantity):
     return graph
 
 
-def generate_weighted_graph(
-    quantity: int,
-) -> Dict[int, List[Tuple[int, int]]]:
-    graph = {}
-
-    for node in range(quantity):
-
-        neighbors = []
-
-        if node + 1 < quantity:
-            neighbors.append(
-                (
-                    node + 1,
-                    randint(1, 10),
-                )
-            )
-
-        if node + 2 < quantity:
-            neighbors.append(
-                (
-                    node + 2,
-                    randint(1, 10),
-                )
-            )
-
-        graph[node] = neighbors
-
-    return graph
-
-
 def generate_tree_values(
     quantity: int,
 ) -> List[int]:
@@ -174,3 +124,36 @@ def generate_tree(quantity: int):
         tree.insert_with_recursion(value)
 
     return tree.get_root()
+
+
+def generate_balanced_bst(quantity: int):
+    values = list(range(quantity))
+
+    tree = Tree()
+
+    def insert_middle(values):
+
+        if not values:
+            return
+
+        middle = len(values) // 2
+
+        tree.insert_with_recursion(
+            values[middle]
+        )
+
+        insert_middle(
+            values[:middle]
+        )
+
+        insert_middle(
+            values[middle + 1:]
+        )
+
+    insert_middle(values)
+
+    return (
+        tree.get_root(),
+        0,
+        quantity - 1,
+    )
